@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    version="4.0"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <context-param>
+  <param-name>
+  	Db_URL
+  </param-name>
+  <param-value>
+  jdbc:mysql://127.0.0.1:3306/StudentLog
+  </param-value>
+  </context-param>
+  <context-param>
+  <param-name>
+  	username
+  </param-name>
+  <param-value>
+  root
+  </param-value>
+  </context-param>
+  <context-param>
+  <param-name>
+  	password
+  </param-name>
+  <param-value>
+  Helloworld@123
+  </param-value>
+  </context-param>
+ <servlet>
+ 
+  <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.learn.RegisterServlet</servlet-class>
+        
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/registerServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+
