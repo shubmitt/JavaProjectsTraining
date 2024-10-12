@@ -2,9 +2,9 @@ package com.learn;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jakarta.servlet.ServletConfig;
@@ -15,20 +15,20 @@ import jakarta.servlet.http.*;
 
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class LoginServlet
  */
-
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/loginServlet")
+public class LoginServlet extends HttpServlet {
+	private Connection conn;
 	private static final long serialVersionUID = 1L;
-	Connection conn;
 
     /**
      * Default constructor. 
      */
-    public RegisterServlet() {
+    public LoginServlet() {
         // TODO Auto-generated constructor stub
     }
-    
+
     @Override
     public void init(ServletConfig config) throws ServletException {
     	super.init(config);
@@ -59,7 +59,6 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
 	}
 
 	/**
@@ -68,29 +67,35 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		String username = request.getParameter("email");
+		String password = request.getParameter("password");
+		
 		try {
+			PreparedStatement statement = conn.prepareStatement("select * from StudentLog.student where email=? && password=?");
+			statement.setString(1, username);
+			statement.setString(2, password);
+			ResultSet rs  = statement.executeQuery();
 			
-			PreparedStatement statement = conn.prepareStatement("insert into student(fname,lname,email,password) values(?,?,?,?)");
-			
-			statement.setString(1,request.getParameter("firstName"));
-			statement.setString(2,request.getParameter("lastName"));
-			statement.setString(3,request.getParameter("email"));
-			statement.setString(4,request.getParameter("password"));
-			statement.execute();
+			if(!rs.next()) {
+				
+				response.sendRedirect(request.getContextPath() + "/login.html");
+				
+			}
+			else {
+				System.out.println(rs.getInt(1));
+				if(rs.getInt(1)>0) {
+				HttpSession session = request.getSession();
+				session.setAttribute("username", username);
+				response.sendRedirect(request.getContextPath() + "/home.html");
+				}
+				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			try {
-				conn.close();
-				//request.getRequestDispatcher("Servletjdbc").forward(request, response);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
+		
 		
 	}
 
