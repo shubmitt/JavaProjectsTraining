@@ -32,6 +32,17 @@
   Helloworld@123
   </param-value>
   </context-param>
+  
+ <filter>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>com.learn.AuthenticationFilter</filter-class>
+</filter>
+
+<filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/home.jsp</url-pattern> <!-- Apply to all requests -->
+</filter-mapping>
+  
  <servlet>
  
   <servlet-name>RegisterServlet</servlet-name>

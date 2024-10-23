@@ -18,7 +18,7 @@ import java.io.IOException;
  * Servlet Filter implementation class AuthenticationFilter
  */
 
-public class AuthenticationFilter implements Filter {
+public class AuthenticationFilter extends HttpFilter implements Filter {
        
     /**
      * @see HttpFilter#HttpFilter()
@@ -46,7 +46,7 @@ public class AuthenticationFilter implements Filter {
          HttpServletResponse httpResponse = (HttpServletResponse) response;
          HttpSession session = httpRequest.getSession(false);
          Boolean isAuthenticated  = session != null && session.getAttribute("username") != null;
-         String loginUri = httpRequest.getContextPath() + "/login.html";
+         String loginUri = httpRequest.getContextPath() + "/login.jsp";
          if(isAuthenticated || httpRequest.getRequestURI().equals(loginUri)) {
         	// pass the request along the filter chain
      		chain.doFilter(request, response);

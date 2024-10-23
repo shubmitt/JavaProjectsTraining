@@ -40,7 +40,7 @@
 
 <filter-mapping>
     <filter-name>AuthenticationFilter</filter-name>
-    <url-pattern>/home.html</url-pattern> <!-- Apply to all requests -->
+    <url-pattern>/home.jsp</url-pattern> <!-- Apply to all requests -->
 </filter-mapping>
   
  <servlet>

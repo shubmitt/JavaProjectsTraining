@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -59,6 +60,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/login.jsp");
 	}
 
 	/**
@@ -77,16 +79,19 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs  = statement.executeQuery();
 			
 			if(!rs.next()) {
+				request.setAttribute("errorMessage", "Invalid username or password");
+				RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
 				
-				response.sendRedirect(request.getContextPath() + "/login.html");
+				//response.sendRedirect(request.getContextPath() + "/login.jsp");
 				
 			}
 			else {
 				System.out.println(rs.getInt(1));
 				if(rs.getInt(1)>0) {
 				HttpSession session = request.getSession();
-				session.setAttribute("username", username);
-				response.sendRedirect(request.getContextPath() + "/home.html");
+				session.setAttribute("username", rs.getString("fname")+" " + rs.getString("lname"));
+				response.sendRedirect(request.getContextPath() + "/home.jsp");
 				}
 				
 			}

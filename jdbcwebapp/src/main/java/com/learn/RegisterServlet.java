@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -37,16 +38,24 @@ public class RegisterServlet extends HttpServlet {
 		 String dburl = context.getInitParameter("Db_URL");
 		  String username = context.getInitParameter("username");
 		  String password = context.getInitParameter("password");
-    	try {
+		  System.out.println(dburl);
+		  try {
     		Class.forName("com.mysql.cj.jdbc.Driver");
     		conn = DriverManager.getConnection(dburl, username, password);
-    		
+    		System.out.println(conn);
     		}
     		catch(ClassNotFoundException e) {
     			e.printStackTrace();
     		} catch (SQLException e) {
 				// TODO Auto-generated catch block
+    			
 				e.printStackTrace();
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
     	
@@ -76,21 +85,15 @@ public class RegisterServlet extends HttpServlet {
 			statement.setString(2,request.getParameter("lastName"));
 			statement.setString(3,request.getParameter("email"));
 			statement.setString(4,request.getParameter("password"));
-			statement.execute();
+			int result = statement.executeUpdate();
+			response.sendRedirect(request.getContextPath() + "/success.jsp"); 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+			
 		}
-		finally {
-			try {
-				conn.close();
-				//request.getRequestDispatcher("Servletjdbc").forward(request, response);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 		
 	}
 

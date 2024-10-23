@@ -7,7 +7,7 @@ Registration Page
 
 <body>
 <h1>Fill the form to register</h1>
-<form method="POST" action="servletInitParams">
+<form method="POST" action="registerServlet">
 <label for="firstName">First Name</label>
 <input type="text" id="firstName" name="firstName"/>
 <br/><br/>
