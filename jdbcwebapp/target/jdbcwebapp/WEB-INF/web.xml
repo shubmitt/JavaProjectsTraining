@@ -13,7 +13,7 @@
   	Db_URL
   </param-name>
   <param-value>
-  jdbc:mysql://127.0.0.1:3306/StudentLog
+  jdbc:mysql://mysql:3306/StudentLog
   </param-value>
   </context-param>
   <context-param>

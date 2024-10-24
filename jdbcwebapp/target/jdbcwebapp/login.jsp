@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
 <title>
@@ -8,10 +7,8 @@ Login
 </head>
 
 <body>
+<h3><% request.getAttribute("errorMessage"); %></h3>
 <h1>Enter your credentials</h1>
-<%if(request.getAttribute("errorMessage") != null){%>
-<h2 style="color:red;"><%= request.getAttribute("errorMessage") %></h2>
-<% }%>
 <form method="POST" action="loginServlet">
 
 <label for="email">Email</label> 
